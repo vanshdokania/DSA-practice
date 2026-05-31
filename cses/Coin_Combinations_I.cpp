@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+int fbu(vector<int>& arr, int x) {
+    vector<int> dp(x + 1, 0);
+    dp[0] = 1;
+    for (int i = 1; i <= x; i++) {
+        for (auto num : arr) {
+            if (i - num >= 0) {
+                dp[i] = (dp[i] + dp[i - num]) % MOD;
+            }
+        }
+    }
+    return dp[x];
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+    int n, x;
+    cin >> n >> x;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+    cout << fbu(arr, x);
+    return 0;
+}

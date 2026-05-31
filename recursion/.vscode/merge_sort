@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> merge(vector<int>& left, vector<int>& right) {
+    vector<int> merged;
+    int i = 0, j = 0;
+
+    while (i < left.size() && j < right.size()) {
+        if (left[i] < right[j]) {
+            merged.push_back(left[i++]);
+        } else {
+            merged.push_back(right[j++]);
+        }
+    }
+
+    while (i < left.size()) merged.push_back(left[i++]);
+    while (j < right.size()) merged.push_back(right[j++]);
+
+    return merged;
+}
+
+vector<int> mergeSort(vector<int>& arr, int lo, int hi) {
+    if (lo == hi) {
+        return vector<int>{arr[lo]};
+    }
+
+    int mid = lo + (hi - lo) / 2;
+
+    vector<int> left = mergeSort(arr, lo, mid);
+    vector<int> right = mergeSort(arr, mid + 1, hi);
+
+    return merge(left, right);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    vector<int> sarr = mergeSort(arr, 0, n - 1);
+
+    for (int x : sarr) cout << x << " ";
+    cout << "\n";
+
+    return 0;
+}
